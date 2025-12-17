@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Student Risk Dashboard{% endblock %}
+
+{% block content %}
+<div class="">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>Student Risk Dashboard</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <!-- Tiles -->
+  <div class="row top_tiles" style="margin: 10px 0;">
+    <div class="col-md-3 col-sm-3 col-xs-6 tile">
+      <span>Total Students</span>
+      <h2>{{ students|length }}</h2>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-6 tile">
+      <span>High Risk</span>
+      <h2>{{ students | selectattr('risk_label', 'equalto', 'high') | list | length }}</h2>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-6 tile">
+      <span>Medium Risk</span>
+      <h2>{{ students | selectattr('risk_label', 'equalto', 'medium') | list | length }}</h2>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-6 tile">
+      <span>Low Risk</span>
+      <h2>{{ students | selectattr('risk_label', 'equalto', 'low') | list | length }}</h2>
+    </div>
+  </div>
+
+  <!-- Table of students -->
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Students at Risk</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="table-responsive">
+            <table class="table table-striped jambo_table">
+              <thead>
+                <tr class="headings">
+                  <th class="column-title">Name</th>
+                  <th class="column-title">Risk</th>
+                  <th class="column-title">Score</th>
+                  <th class="column-title">Avg Grade</th>
+                  <th class="column-title">Last Access</th>
+                  <th class="column-title no-link last"><span class="nobr">Details</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in students %}
+                <tr class="even pointer">
+                  <td>{{ s.name }}</td>
+                  <td>
+                    {% if s.risk_label == 'high' %}
+                      <span class="label label-danger">High</span>
+                    {% elif s.risk_label == 'medium' %}
+                      <span class="label label-warning">Medium</span>
+                    {% else %}
+                      <span class="label label-success">Low</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ "%.2f"|format(s.risk_score) }}</td>
+                  <td>{{ "%.2f"|format(s.avg_grade or 0) }}</td>
+                  <td>{{ s.lastaccess }}</td>
+                  <td class="last">
+                    <a href="{{ url_for('dashboard.student_detail', user_id=s.user_id) }}"
+                       class="btn btn-xs btn-primary">View</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ student.name }} – Details{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h3>{{ student.name }}</h3>
+        <p class="text-muted mb-1">{{ student.email }}</p>
+        <p>Risk:
+          {% if student.risk_label == 'high' %}
+            <span class="badge badge-danger">High</span>
+          {% elif student.risk_label == 'medium' %}
+            <span class="badge badge-warning">Medium</span>
+          {% else %}
+            <span class="badge badge-success">Low</span>
+          {% endif %}
+          ({{ "%.2f"|format(student.risk_score) }})
+        </p>
+        <p>Average grade: {{ student.avg_grade }}</p>
+        <p>Last access: {{ student.lastaccess }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Course activity</h4>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th> Course </th>
+                <th> Logs </th>
+                <th> Quiz attempts </th>
+                <th> Avg quiz score </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for c in student.courses %}
+              <tr>
+                <td>{{ c.course_name }}</td>
+                <td>{{ c.log_count }}</td>
+                <td>{{ c.quiz_attempts }}</td>
+                <td>{{ c.avg_quiz_score }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

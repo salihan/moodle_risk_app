@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Moodle Risk Dashboard{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendors/bootstrap/dist/css/bootstrap.min.css') }}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendors/font-awesome/css/font-awesome.min.css') }}">
+    <!-- NProgress -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendors/nprogress/nprogress.css') }}">
+    <!-- Gentelella custom -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='build/css/custom.min.css') }}">
+
+    <!-- Optional: your overrides -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}"> -->
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+
+        <!-- Left sidebar -->
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="{{ url_for('dashboard.index') }}" class="site_title">
+                <i class="fa fa-graduation-cap"></i> <span>RiskMoodle</span>
+              </a>
+            </div>
+            <div class="clearfix"></div>
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>Student Risk Analytics</h3>
+                <ul class="nav side-menu">
+                  <li>
+                    <a href="{{ url_for('dashboard.index') }}">
+                      <i class="fa fa-dashboard"></i> Dashboard
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+          </div>
+        </div>
+        <!-- /left sidebar -->
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <ul class="nav navbar-nav navbar-right">
+                    <!-- User dropdown -->
+                    <li class="">
+                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <!-- Use a static image if you have one, or remove the <img> entirely -->
+                        <img src="{{ url_for('static', filename='build/images/img.jpg') }}" alt="">Advisor
+                        <span class=" fa fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-usermenu pull-right">
+                        <li><a href="{{ url_for('dashboard.index') }}"> Dashboard</a></li>
+                        <li><a href="javascript:;">Help</a></li>
+                        <li>
+                            <a href="{{ url_for('auth.logout') }}">
+                            <i class="fa fa-sign-out pull-right"></i> Log Out
+                            </a>
+                        </li>
+                        </ul>
+                    </li>                
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          {% block content %}{% endblock %}
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            © 2025 Student at Risk Dashboard
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ url_for('static', filename='vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ url_for('static', filename='vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- FastClick -->
+    <script src="{{ url_for('static', filename='vendors/fastclick/lib/fastclick.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ url_for('static', filename='vendors/nprogress/nprogress.js') }}"></script>
+    <!-- Gentelella custom -->
+    <script src="{{ url_for('static', filename='build/js/custom.min.js') }}"></script>
+
+    <!-- Optional: your own JS -->
+    <!-- <script src="{{ url_for('static', filename='js/app.js') }}"></script> -->
+  </body>
+</html>

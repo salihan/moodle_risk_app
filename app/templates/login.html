@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Login | Moodle Risk Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendors/bootstrap/dist/css/bootstrap.min.css') }}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendors/font-awesome/css/font-awesome.min.css') }}">
+    <!-- NProgress -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendors/nprogress/nprogress.css') }}">
+    <!-- Gentelella custom -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='build/css/custom.min.css') }}">
+
+    <!-- Optional: your overrides -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}"> -->
+  </head>
+
+  <body class="login">
+    <div>
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form method="post" action="{{ url_for('auth.login') }}">
+              <h1>Moodle Risk Login</h1>
+
+              {# Flash messages (invalid credentials etc.) #}
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  <div class="alert alert-danger" role="alert">
+                    {% for category, message in messages %}
+                      {{ message }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              {% endwith %}
+
+              <div>
+                <input type="text"
+                       name="username"
+                       class="form-control"
+                       placeholder="Username"
+                       required="" />
+              </div>
+              <div>
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="Password"
+                       required="" />
+              </div>
+              <div>
+                <button class="btn btn-default submit" type="submit">
+                  Log in
+                </button>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">
+                  <span>Student at Risk Dashboard</span>
+                </p>
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-graduation-cap"></i> RiskMoodle</h1>
+                  <p>© 2025 All Rights Reserved.</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ url_for('static', filename='vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ url_for('static', filename='vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ url_for('static', filename='vendors/nprogress/nprogress.js') }}"></script>
+    <!-- Gentelella custom -->
+    <script src="{{ url_for('static', filename='build/js/custom.min.js') }}"></script>
+  </body>
+</html>
