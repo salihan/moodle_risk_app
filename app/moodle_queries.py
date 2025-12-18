@@ -1,4 +1,4 @@
-from sqlalchemy import func
+from sqlalchemy import func, select
 from .extensions import db
 from .models import User, Course, Enrol, UserEnrolment, Quiz, QuizAttempt, GradeItem, GradeGrade, LogEntry
 from datetime import datetime
@@ -9,13 +9,13 @@ def format_ts(ts):
     return datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d %H:%M")
 
 def get_active_students():
-    sub = db.session.query(UserEnrolment.userid).distinct().subquery()
+    sub = select(UserEnrolment.userid).distinct()
     return db.session.query(User).filter(User.id.in_(sub)).all()
 
 def get_student_course_features(user_id, course_id):
     log_count = db.session.query(func.count(LogEntry.id)).filter_by(userid=user_id, courseid=course_id).scalar() or 0
 
-    quiz_ids = db.session.query(Quiz.id).filter(Quiz.courseid == course_id).subquery()
+    quiz_ids = select(Quiz.id).filter_by(courseid=course_id)
     attempts = db.session.query(QuizAttempt).filter(
         QuizAttempt.userid == user_id,
         QuizAttempt.quizid.in_(quiz_ids),

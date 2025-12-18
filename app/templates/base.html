@@ -102,18 +102,17 @@
       </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="{{ url_for('static', filename='vendors/jquery/dist/jquery.min.js') }}"></script>
-    <!-- Bootstrap -->
-    <script src="{{ url_for('static', filename='vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <!-- FastClick -->
-    <script src="{{ url_for('static', filename='vendors/fastclick/lib/fastclick.js') }}"></script>
-    <!-- NProgress -->
-    <script src="{{ url_for('static', filename='vendors/nprogress/nprogress.js') }}"></script>
-    <!-- Gentelella custom -->
-    <script src="{{ url_for('static', filename='build/js/custom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/fastclick/lib/fastclick.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/nprogress/nprogress.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/Chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='build/js/custom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
-    <!-- Optional: your own JS -->
-    <!-- <script src="{{ url_for('static', filename='js/app.js') }}"></script> -->
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>
+
   </body>
 </html>

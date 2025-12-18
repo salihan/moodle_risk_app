@@ -31,6 +31,35 @@
     </div>
   </div>
 
+  <!-- Charts row -->
+  <div class="row">
+    <!-- Risk distribution donut -->
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Risk Distribution</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <canvas id="riskDonutChart" style="width: 100%; height: 260px;"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk score per student (bar) -->
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Risk Score by Student</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <canvas id="riskBarChart" style="width: 100%; height: 260px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Table of students -->
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -82,4 +111,80 @@
     </div>
   </div>
 </div>
+
 {% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Counts per risk level using Jinja
+  var highCount = {{ students | selectattr('risk_label', 'equalto', 'high') | list | length }};
+  var mediumCount = {{ students | selectattr('risk_label', 'equalto', 'medium') | list | length }};
+  var lowCount = {{ students | selectattr('risk_label', 'equalto', 'low') | list | length }};
+
+  // Data for "Risk Score by Student" bar chart
+  var studentNames = {{ students | map(attribute='name') | list | tojson }};
+  var studentRiskScores = {{ students | map(attribute='risk_score') | list | tojson }};
+
+  // Risk distribution donut chart
+  var ctxDonut = document.getElementById('riskDonutChart');
+  if (ctxDonut && window.Chart) {
+    new Chart(ctxDonut, {
+      type: 'doughnut',
+      data: {
+        labels: ['High', 'Medium', 'Low'],
+        datasets: [{
+          data: [highCount, mediumCount, lowCount],
+          backgroundColor: ['#E74C3C', '#F1C40F', '#2ECC71'],
+          hoverBackgroundColor: ['#C0392B', '#F39C12', '#27AE60']
+        }]
+      },
+      options: {
+        legend: {
+          position: 'bottom'
+        },
+        cutoutPercentage: 60,
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+  }
+
+  // Risk score per student bar chart
+  var ctxBar = document.getElementById('riskBarChart');
+  if (ctxBar && window.Chart) {
+    new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: studentNames,
+        datasets: [{
+          label: 'Risk score',
+          data: studentRiskScores,
+          backgroundColor: '#3498DB'
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: 1
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 10
+            }
+          }]
+        },
+        legend: {
+          display: false
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+  }
+</script>
+{% endblock %}
+
